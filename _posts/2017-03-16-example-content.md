@@ -2,7 +2,7 @@
 layout: post
 title: "Example Content"
 author: "Chester"
-tags: Markdown Example
+tags: Markdown
 excerpt_separator: <!--more-->
 ---
 
