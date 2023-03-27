@@ -75,3 +75,16 @@ $$
 SLIV=14 \cdot(14-L+1)+(14-1-S)
 $$
 并且$0<L \leq 14-S$。
+
+对于PUSCH repetition Type B，起始符号*S*相对于slot起始位置，连续符号数*L*从*S*开始技术，并且这两个参数由资源分配表中的*startSymbol*和*length*确定（也就是对PUSCH repetition Type B，不能通过*SLIV*的方式配置）。
+
+对于PUSCH repetition Type A和TB processing over multiple slots，PUSCH映射类型可以配置为Type A或Type B，见38211/6.4.1.1.3，由索引行确定。
+对于PUSCH repetition Type B，PUSCH映射类型只能是Type B。
+
+这是协议定义合法的起始符号和符号长度组合。
+![image](https://user-images.githubusercontent.com/115327603/227889228-a6e8fa32-fdc4-4719-8440-8f18b823753a.png)
+
+对于TB processing over multiple slots，当使用C-RNTI，MCS-C-RNTI或CS-RNTI加扰CRC（NDI=1）的DCI format 0_1或0_2调度发送PUSCH时，有以下要求：
+- 用于TBS determination的slot个数$N$由*numberOfSlotsTBoMS*指示。
+- 如果资源分配表格中存在*numberOfRepetitions*，那么重复次数*K*等于*numberOfRepetitions*；否则$K=1$。
+- 当UE支持TB processing over multiple slots的重复时，UE不希望$N \cdot K$超过32。
