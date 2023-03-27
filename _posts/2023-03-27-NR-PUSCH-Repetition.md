@@ -57,3 +57,10 @@ $$
 
 $N_{\text {slot, offset, PDCCH }}^{\mathrm{CA}}$和$\mu_{\text {offset,PDCCH}}$是小区接收到的PDCCH的$N_{\text {slot, offset}}^{\mathrm{CA}}$和$\mu_{\text {offset}}$，由*ca-SlotOffset*配置。对应的PUSCH的参数由发送PUSCH的小区的参数*ca-SlotOffset*配置，见38211/4.5。
 
+在确定时域资源分配时
+- 对于DCI format 0_1调度的PUSCH，如果*pusch-RepTypeIndicatorDCI-0-1*配置为'pusch-RepTypeB'，UE采用PUSCH repetition Type B过程。
+- 对于DCI format 0_2调度的PUSCH，如果*pusch-RepTypeIndicatorDCI-0-2*配置为'pusch-RepTypeB'，UE采用PUSCH repetition Type B过程。
+- 否则，对于PDCCH或RAR UL grant或fallbackRAR UL grant调度的PUSCH，UE采用PUSCH repetition Type A过程。
+
+在确定时域资源分配时
+对于DCI format 0_1或DCI format 0_2调度的PUSCH，如果参数*numberOfSlotsTBoMS*存在并且取值大于1，那么UE采用TB processing over multiple slots过程。
