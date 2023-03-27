@@ -139,3 +139,13 @@ If a UE would transmit a PUSCH of PUSCH repetition Type A when AvailableSlotCoun
 发送MsgA PUSCH时，如果没有配置*startSymbolAndLengthMsgA-PO*，并且如果*PUSCH-ConfigCommon*提供了TDRA列表*PUSCH-TimeDomainResourceAllocationList*，那么UE应该使用*msgA-PUSCH-TimeDomainAllocation*只是使用列表中的哪个值。如果没有提供*PUSCH-TimeDomainResourceAllocationList*，俺么UE应该使用表格6.1.2.1.1-2和6.1.2.1.1-3中的*S*和*L*（*msgA-PUSCH-TimeDomainAllocation*指示使用列表中的哪个值），关于PUSCH传输的时间偏移见38213。
 
 对于PUSCH repetition Type A和TB processing over multiple slots，在multi-slot PUSCH transmission中的一个slot上的PUSCH会被丢掉，见38213/9/11.1/11.2A/15/17.2。
+
+
+
+
+对于PUSCH repetition Type B，除了没有TB数据的CSI上报PUSCH，名义重复个数由*numberOfRepetitions*给出。对于第$n$次名义重复，$n=0, \ldots, numberOfRepetitions-1$, 
+- 名义重复开始的slot等于$K_s+\left\lfloor\frac{S+n \cdot L}{N_{s y m b}^{s l o t}}\right\rfloor$，并且相对于该slot起始的起始符号位置等于$\bmod \left(S+n \cdot L, N_{s y m b}^{s l o t}\right)$。
+- 名义重复结束的slot等于$K_s+\left\lfloor\frac{S+(n+1) \cdot L-1}{N_{s y m b}^{s l o t}}\right\rfloor$，并且相对于该slot起始的结束符号位置等于$\bmod \left(S+(n+1) \cdot L-1, N_{s y m b}^{s l o t}\right)$。
+
+这里的$K_s$是PUSCH传输开始的slot，$N_{s y m b}^{s l o t}$是每个slot上的符号数。
+
