@@ -149,3 +149,7 @@ If a UE would transmit a PUSCH of PUSCH repetition Type A when AvailableSlotCoun
 
 这里的$K_s$是PUSCH传输开始的slot，$N_{s y m b}^{s l o t}$是每个slot上的符号数。
 
+接下来协议给出了很多PUSCH repetition Type B中，不可用的符号位置场景，例如S slot上的DL符号位置，这里不翻译。
+
+对于PUSCH repetition Type B，在确定$K$个名义重复中所有不可用的符号后，剩下的符号认为是潜在的合法符号位置。如果对于一个名义重复，潜在的合法符号个数大于0，那么该名义重复包含一个或者多个实际重复，每个实际重复包含一个所有潜在的合法符号的连续的集合（在一个slot内的符号）。只有一个符号的实际重复会被丢掉，除非$L=1$。一个实际重复可能会按照协议丢掉，见38213/9/11.1/11.2A/15/17.2。
+UE应该在实际重复上重复该TB。第$n$次实际重复使用的冗余版本，根据表格6.1.2.1-2（这里的计数包括被丢掉的实际重复）确定，$N=1$。
