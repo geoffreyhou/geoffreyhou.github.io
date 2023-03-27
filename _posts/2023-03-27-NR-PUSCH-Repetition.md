@@ -153,3 +153,16 @@ If a UE would transmit a PUSCH of PUSCH repetition Type A when AvailableSlotCoun
 
 对于PUSCH repetition Type B，在确定$K$个名义重复中所有不可用的符号后，剩下的符号认为是潜在的合法符号位置。如果对于一个名义重复，潜在的合法符号个数大于0，那么该名义重复包含一个或者多个实际重复，每个实际重复包含一个所有潜在的合法符号的连续的集合（在一个slot内的符号）。只有一个符号的实际重复会被丢掉，除非$L=1$。一个实际重复可能会按照协议丢掉，见38213/9/11.1/11.2A/15/17.2。
 UE应该在实际重复上重复该TB。第$n$次实际重复使用的冗余版本，根据表格6.1.2.1-2（这里的计数包括被丢掉的实际重复）确定，$N=1$。
+
+
+对于PUSCH repetition Type B，当UE接收到调度非周期CSI上报的DCI或者激活PUSCH上的半持续CSI上报（没有TB）时，名义重复个数认为是1，不管配置的*numberOfRepetitions*是多少。并且在这个情况下，希望第一个名义重复和第一个实际重复相同。
+对于携带半持续CSI上报没有PDCCH的PUSCH repetition Type B，如果第一个名义重复和第一个十几重复不一样，那么第一个名义重复会被丢掉；否则第一个名义重复按照协议丢掉。见38213/9/11.1/11.2A/15/17.2。
+
+对于PUSCH repetition Type B，当UE被调度发送一个TB和非周期CSI上报，那么CSI上报只在第一次实际重复上复用，也就是后面的重复只发送TB。UE不希望第一个实际重复只占用一个符号。
+
+如果*pusch-Config*中的*pusch-TimeDomainAllocationListForMultiPUSCH*包含的行指示了2个到8个连续的PUSCH的资源分配信息，*k2-r16*配置的$K_2$指示了多个PUSCH中第一个PUSCH发送的slot。每个PUSCH有各自的*SLIV*和映射类型。调度的PUSCH个数由DCI format 0_1指示的*pusch-TimeDomainAllocationListForMultiPUSCH*的行中的合法的*SLIV*个数确定。
+
+对于*pusch-Config*中的*pusch-TimeDomainAllocationListForMultiPUSCH*，每个PUSCH有各自的*SLIV*和映射类型。调度的PUSCH个数由DCI format 0_1指示的*pusch-TimeDomainAllocationListForMultiPUSCH*的行中的合法的*SLIV*个数确定。
+
+如果UE配置了*pusch-TimeDomainAllocationListForMultiPUSCH*中的*extendedK2*，其中一个或多个行包含了多个*SLIV*，并且DCI format 0_1指示PUSCH重传，PUSCH对应configured grant Type 1或Type 2，那么UE不希望知识的*SLIV*的个数大于1。
+
