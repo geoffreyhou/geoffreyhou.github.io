@@ -40,3 +40,13 @@ $$
 - *reportSlotOffsetListDCI-0-1*或者*reportSlotOffsetListDCI-0-1-r17*（如果通过DCI format 0_1调度PUSCH，并且该配置了这个参数）；
 - 如果上面两条都不满足，那么就是*reportSlotOffsetList*或者*reportSlotOffsetList-r17*。
 上面的参数都在IE *CSI-ReportConfig*中。$Y_j(m+1)$是$Y_j$的第$m+1$个实例。
+
+UE发送PUSCH的slot $K_s$和$K_2$有关，并且通过下面公式计算：
+如果至少有一个调度小区的UE配置了参数*ca-SlotOffset*，计算如下：
+$$
+K_s=\left\lfloor n \cdot \frac{2^{\mu P U S C H}}{2^{\mu_{P D C C H}}}\right\rfloor+K_2+\left\lfloor\left(\frac{N_{\text {slot, offset, }, P D C C H}^{C A}}{2^{\mu_0 f f s e t, P D C C H}}-\frac{N_{\text {slot, offset, }, P U S C H}^{C A}}{2^{\mu_0 \text { offet }, \text { PUSCH }}}\right) \cdot 2^{\mu_{P U S C H}}\right\rfloor
+$$
+否则，计算如下：
+$$
+K_s=\left\lfloor n \cdot \frac{2^{\mu P U S C H}}{2^{\mu P D C C H}}\right\rfloor+K_2+K_{\text {offset }} \cdot \frac{2^{\mu \text { PUSCH }}}{2^{\mu_{\text {off set }}}}
+$$
