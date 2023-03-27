@@ -88,3 +88,11 @@ $$
 - 用于TBS determination的slot个数$N$由*numberOfSlotsTBoMS*指示。
 - 如果资源分配表格中存在*numberOfRepetitions*，那么重复次数*K*等于*numberOfRepetitions*；否则$K=1$。
 - 当UE支持TB processing over multiple slots的重复时，UE不希望$N \cdot K$超过32。
+
+当UE配置$\mu=5$或6时，UE不希望通过一个或多个DCI在一个slot上调度超过一个PUSCH。
+
+对于PUSCH repetition Type A，当使用C-RNTI，MCS-C-RNTI或CS-RNTI加扰CRC（NDI=1）的DCI format 0_1或0_2调度发送PUSCH时，有以下要求：
+- 如果资源分配表格中存在*numberOfRepetitions*，那么重复次数$K$等于*numberOfRepetitions*。
+- 或者如果UE配置了*pusch-AggregationFactor*，那么重复次数$K$等于*pusch-AggregationFactor*。
+- 否则，$K=1$.
+- 用于TBS determination的slot个数$N=1$。
