@@ -96,3 +96,12 @@ $$
 - 或者如果UE配置了*pusch-AggregationFactor*，那么重复次数$K$等于*pusch-AggregationFactor*。
 - 否则，$K=1$.
 - 用于TBS determination的slot个数$N=1$。
+
+对于PUSCH repetition type A，RAR UL grant调度发送PUSCH时，MCS信息字段的2 MSBs提供了一个codepoint，用来确定重复次数$K$，配合下面的表格使用（用于TBS determination的slot个数$N=1$）。
+对于PUSCH repetition type A，TC RNTI加扰CRC的DCI format 0_0调度发送PUSCH时，MCS信息字段的2 MSBs提供了一个codepoint，用来确定重复次数$K$，配合下面的表格使用（用于TBS determination的slot个数$N=1$）。
+![image](https://user-images.githubusercontent.com/115327603/227894911-46b3adbe-ad19-4896-824e-47dd7f9d87b0.png)
+
+如果配置了*pusch-TimeDomainAllocationListForMultiPUSCH*，UE不希望配置*pusch-AggregationFactor*。
+
+如果UE在pusch *TimeDomainAllocationListForMultiPUSCH*中配置有*extendedK2*，其中一个或多个行包含用于服务小区的UL BWP上的pusch的多个*SLIV*，则UE不应用pusch *AggregationFactor*（如果配置），在服务小区的UL BWP上转换为DCI格式0_1，并且UE不期望在pusch *TimeDomainAllocationListForMultiPUSCH*中配置*numberOfRepetitions*。
+
