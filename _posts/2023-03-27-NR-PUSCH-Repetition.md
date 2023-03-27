@@ -44,7 +44,7 @@ $$
 UE发送PUSCH的slot $K_s$和$K_2$有关，并且通过下面公式计算：
 如果至少有一个调度小区的UE配置了参数*ca-SlotOffset*，计算如下：
 $$
-K_s=\left\lfloor n \rfloor
+K_s=\left\lfloor n \right\rfloor
 $$
 $$
 K_s=\left\lfloor n \cdot \frac{2^{\mu P U S C H}}{2^{\mu_{P D C C H}}}\right\rfloor+K_2+\left\lfloor\left(\frac{N_{\text {slot, offset, }, P D C C H}^{C A}}{2^{\mu_0 f f s e t, P D C C H}}-\frac{N_{\text {slot, offset, }, P U S C H}^{C A}}{2^{\mu_0 \text { offet }, \text { PUSCH }}}\right) \cdot 2^{\mu_{P U S C H}}\right\rfloor
