@@ -166,3 +166,37 @@ UE应该在实际重复上重复该TB。第$n$次实际重复使用的冗余版�
 
 如果UE配置了*pusch-TimeDomainAllocationListForMultiPUSCH*中的*extendedK2*，其中一个或多个行包含了多个*SLIV*，并且DCI format 0_1指示PUSCH重传，PUSCH对应configured grant Type 1或Type 2，那么UE不希望知识的*SLIV*的个数大于1。
 
+
+
+当UE配置了*minimumSchedulingOffsetK2*，那么要是用DCI format 0_1中字段'*Minimum applicable scheduling offset indicator*'指示的最小调度偏移约束。如果UE配置了*minimumSchedulingOffsetK2*，但是没有收到带有'*Minimum applicable scheduling offset indicator*'的DCI，那么UE应该使用'Minimum applicable scheduling offset indicator'值为0对应的约束。
+使用最小调度偏移约束时，UE不希望被DCI调度在slot $n$发送C-RNTI，CS_RNTI，MCS-RNTI或SP-CSI-RNTI调度的PUSCH，$K_2$小于$\left\lceil K_{2 \min } \cdot \frac{2^{\mu^{\prime}}}{2^\mu}\right\rceil$，这里的$K_{2 \min }$是使用的最小调度偏移约束。
+使用RAR UL grant或fallbackRAR UL grant调度时，或者PUSCH使用TC-RNTI调度时，不使用最小调度偏移约束。最小调度偏移限制变更的应用延迟见5.3.1。
+
+
+
+
+对于PUSCH repetition Type A：
+当*srs-ResourceSetToAddModList*或*srs-ResourceSetToAddModListDCI-0-2*配置了两个SRS资源集合时，并且*SRS-ResourceSet*中的*usage*配置为'codebook'或'noncodebook'，如果$K>1$，$K$个连续的slot使用相同的符号分配，并且限制为1层。每个slot中第一个和第二个SRS资源集合的时机按照下面确定：
+- 如果DCI format 0_1或DCI format 0_2为*SRS resource set indicator*指示了codepoint "00"，那么第一个SRS资源集合和所有$K$个连续的slot相关。
+- 如果DCI format 0_1或DCI format 0_2为*SRS resource set indicator*指示了codepoint "01"，那么第一个SRS资源集合和所有$K$个连续的slot相关。
+- 如果DCI format 0_1或DCI format 0_2为*SRS resource set indicator*指示了codepoint "10"，有下面规则：
+-- 当$K=2$时，第一个和第二个SRS资源集合分别被用于第一个和第二个2个连续的slot。
+-- 当$K>2$时，如果*PUSCH-Config*中的*cyclicMapping*使能，那么第一个和第二个SRS资源集合分别被用于$K$个连续slot的第一个和第二个2个连续的slot，剩下的slot这样重复。
+-- 当$K>2$时，如果*PUSCH-Config*中的*sequentialMapping*使能，那么第一个SRS资源集合用于第一和第二个slot，第二个SRS资源集合用于第三和第四个slot，剩下的slot这样重复。
+- 如果DCI format 0_1或DCI format 0_2为*SRS resource set indicator*指示了codepoint "11"，有下面规则：
+-- 当$K=2$时，第一个和第二个SRS资源集合分别被用于第一个和第二个2个连续的slot。
+-- 当$K>2$时，如果*PUSCH-Config*中的*cyclicMapping*使能，那么第一个和第二个SRS资源集合分别被用于$K$个连续slot的第一个和第二个2个连续的slot，剩下的slot这样重复。
+-- 当$K>2$时，如果*PUSCH-Config*中的*sequentialMapping*使能，那么第一个SRS资源集合用于第一和第二个slot，第二个SRS资源集合用于第三和第四个slot，剩下的slot这样重复。
+
+对于PUSCH repetition Type B：
+当*srs-ResourceSetToAddModList*或*srs-ResourceSetToAddModListDCI-0-2*配置了两个SRS资源集合时，并且*SRS-ResourceSet*中的*usage*配置为'codebook'或'noncodebook'，SRS资源集合和名义PUSCH重复相关，和上一段类型，只是把上面的slot换成名义重复。
+
+
+
+
+对于PUSCH repetition Type A和PUSCH repetition Type B，当DCI format 0_1或DCI format 0_2为*SRS resource set indicator*指示了codepoint "10"或"11"时，第$n$次传输时机（PUSCH repetition Type A）使用的冗余版本$\mathrm{n}=0,1, \ldots K-1$，或者第$n$次实际重复（PUSCH repetition Type B，包含被丢掉的实际传输）根据表格6.1.2.1-2和6.1.2.1-3确定。
+For all PUSCH repetitions associated with the SRS resource set of the first transmission occasion or actual repetition, the redundancy version to be applied is derived according to Table 6.1.2.1-2, where n is counted only considering PUSCH transmission occasions or actual repetitions associated with the same SRS resource set as the first transmission occasion or actual repetition.
+The redundancy version for PUSCH transmission occasions or actual repetitions that are associated with an SRS resource set other than the SRS resource set of the first transmission occasion or actual repetition is derived according to Table 6.1.2.1-3, where additional shifting operation for each redundancy version is configured by higher layer parameter sequenceOffsetforRV in PUSCH-Config and  is counted only considering PUSCH transmission occasions or actual repetitions that are not associated with the SRS resource set of the first transmission occasion or actual repetition.
+![image](https://user-images.githubusercontent.com/115327603/227929122-ff0f46c2-878e-4863-b08d-e9b419a943f0.png)
+
+
