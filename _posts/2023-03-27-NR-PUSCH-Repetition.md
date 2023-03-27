@@ -118,3 +118,24 @@ $$
 - 对于DCI format 0_1或0_2调度的TB processing over multiple slots的PUSCH，UE基于DCI format 0_1或0_2的TDRA字段确定$N \cdot K$个连续的slot。
 - 一段对半双工radcap UE的描述，暂时省去。
 - 对RAR UL grant和DCI format 0_0 with CRC scrambled by TC-RNTI调度的PUSCH repetition Type A，也是UE基于DCI format 0_1或0_2的TDRA字段确定$N \cdot K$个连续的slot。
+
+If a UE would transmit a PUSCH of PUSCH repetition Type A when AvailableSlotCounting is enabled and K>1 or a TB processing over multiple slots over  slots, and the UE does not transmit the PUSCH of a TB processing over multiple slots or the PUSCH repetition Type A in a slot from the  slots, according to Clause 9, Clause 11.1, Clause 11.2A, Clause 15 and Clause 17.2 of [6, TS 38.213], the UE counts the slots in the number of  slots.
+
+对于PUSCH repetition Type A，如果$K>1$：
+- 如果PUSCH通过DCI format 0_1或0_2调度：
+-- 如果*AvailableSlotCounting*使能，$N \cdot K$个的slot上全部使用相同的符号分配，并且PUSCH被限制为1层。UE应该在$N \cdot K$个的slot上重复这个TB，并且每个slot上使用相同的符号分配。（也就是这时候，多个slot可能不连续）
+-- 否则，$N \cdot K$个连续的slot上全部使用相同的符号分配，并且PUSCH被限制为1层。UE应该在$N \cdot K$个连续的slot上重复这个TB，并且每个slot上使用相同的符号分配。
+- 或者如果通过RAR UL grant或DCI format 0_0 with CRC scrambled by TC-RNTI调度PUSCH时，$N \cdot K$个的slot上全部使用相同的符号分配，并且PUSCH被限制为1层。UE应该在$N \cdot K$个的slot上重复这个TB，并且每个slot上使用相同的符号分配。（也就是这时候，多个slot可能不连续）
+
+对于TB processing over multiple slots：
+- 和上面类似，只是paired spectrum or supplementary uplink band时连续的slot，其他可能不连续。
+
+
+对于DCI format 0_1或0_2或0_0 with CRC scrambled by TC-RNTI调度的PUSCH，该TB的第$n$次传输时刻使用的冗余版本由下表确定，其中$\mathrm{n}=0,1, \ldots N \cdot K-1$。
+对于RAR UL grant调度的PUSCH，该TB的第$n$次传输时刻使用的冗余版本由下表的第一行确定，其中$\mathrm{n}=0,1, \ldots N \cdot K-1$。
+![image](https://user-images.githubusercontent.com/115327603/227907533-db5ae439-9032-4d90-ad56-35618a7db7b3.png)
+
+当在non-initial UL BWP上发送MsgA PUSCH时，如果配置了*startSymbolAndLengthMsgA-PO*，那么UE根据*startSymbolAndLengthMsgA-PO*确定*S*和*L*。
+发送MsgA PUSCH时，如果没有配置*startSymbolAndLengthMsgA-PO*，并且如果*PUSCH-ConfigCommon*提供了TDRA列表*PUSCH-TimeDomainResourceAllocationList*，那么UE应该使用*msgA-PUSCH-TimeDomainAllocation*只是使用列表中的哪个值。如果没有提供*PUSCH-TimeDomainResourceAllocationList*，俺么UE应该使用表格6.1.2.1.1-2和6.1.2.1.1-3中的*S*和*L*（*msgA-PUSCH-TimeDomainAllocation*指示使用列表中的哪个值），关于PUSCH传输的时间偏移见38213。
+
+对于PUSCH repetition Type A和TB processing over multiple slots，在multi-slot PUSCH transmission中的一个slot上的PUSCH会被丢掉，见38213/9/11.1/11.2A/15/17.2。
