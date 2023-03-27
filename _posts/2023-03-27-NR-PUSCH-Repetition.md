@@ -66,3 +66,12 @@ $N_{\text {slot, offset, PDCCH }}^{\mathrm{CA}}$和$\mu_{\text {offset,PDCCH}}$�
 对于DCI format 0_1或DCI format 0_2调度的PUSCH，如果参数*numberOfSlotsTBoMS*存在并且取值大于1，那么UE采用TB processing over multiple slots过程。
 
 对于PUSCH repetition Type A和TB processing over multiple slots，起始符号*S*相对于slot的起始位置，连续符号数*L*从*S*开始计数，*S* *L*和*SLIV*之间的关系为：
+if $(L-1) \leq 7$，then
+$$
+SLIV=14 \cdot(L-1)+S
+$$
+else
+$$
+SLIV=14 \cdot(14-L+1)+(14-1-S)
+$$
+并且$0<L \leq 14-S$。
