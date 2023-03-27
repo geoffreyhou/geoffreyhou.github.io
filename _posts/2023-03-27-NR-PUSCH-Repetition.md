@@ -105,3 +105,16 @@ $$
 
 如果UE在pusch *TimeDomainAllocationListForMultiPUSCH*中配置有*extendedK2*，其中一个或多个行包含用于服务小区的UL BWP上的pusch的多个*SLIV*，则UE不应用pusch *AggregationFactor*（如果配置），在服务小区的UL BWP上转换为DCI格式0_1，并且UE不期望在pusch *TimeDomainAllocationListForMultiPUSCH*中配置*numberOfRepetitions*。
 
+如果UE在pusch *TimeDomainAllocationListForMultiPUSCH*中配置有*extendedK2*，其中一个或多个行包含用于服务小区的UL BWP上的pusch的多个*SLIV*，当任意两个UL DCI在同一符号中结束并且DCI中的至少一个调度多个pusch时，其中与DCI相关联的跨度被定义为从第一个调度的PUSCH的开始到最后一个调度的PUSCH的结束。
+
+对于unpaired spectrum（TDD）：
+- 当*AvailableSlotCounting*使能的时候，如果$K>1$，那么UE基于基于*tdd-UL-DL-ConfigurationCommon*，*tdd-UL-DL-ConfigurationDedicated*，和*ssb-PositionsInBurst*以及DCI format 0_1或0_2中的TDRA信息字段值，确定$N \cdot K$个slot用于PUSCH传输。
+-- 如果使用的资源分配表格的行索引指示的符号，至少有一个符号和该slot上的一个DL符号（由*tdd-UL-DL-ConfigurationCommon*或*tdd-UL-DL-ConfigurationDedicated*指示或由*ssb-PositionsInBurst*指示）重叠，那么这个slot不计算在这$N \cdot K$个slot内。
+- 否则，UE基于DCI format 0_1或0_2的TDRA字段确定PUSCH repetition type A的PUSCH传输的$N \cdot K$个连续的slot（注意这里是连续的）。
+- UE基于*tdd-UL-DL-ConfigurationCommon*，*tdd-UL-DL-ConfigurationDedicated*和*ssb-PositionsInBurst*以及DCI格式0_1或0_2中的TDRA信息字段值，来确定用于在由DCI格式0_1或0_2调度的TB processing over multiple slots处理的PUSCH的$N \cdot K$个slot。
+-- 如果使用的资源分配表格的行索引指示的符号，至少有一个符号和该slot上的一个DL符号（由*tdd-UL-DL-ConfigurationCommon*或*tdd-UL-DL-ConfigurationDedicated*指示或由*ssb-PositionsInBurst*指示）重叠，那么这个slot不计算在这$N \cdot K$个slot内。
+- 剩下的还有RAR UL grant和DCI format 0_0 with CRC scrambled by TC-RNTI调度的PUSCH repetition Type A的类似的描述，都是说和DL符号有重叠的时候该slot不在$N \cdot K$个slot计数。
+对于paired spectrum（FDD）和SUL band：
+- 对于DCI format 0_1或0_2调度的TB processing over multiple slots的PUSCH，UE基于DCI format 0_1或0_2的TDRA字段确定$N \cdot K$个连续的slot。
+- 一段对半双工radcap UE的描述，暂时省去。
+- 对RAR UL grant和DCI format 0_0 with CRC scrambled by TC-RNTI调度的PUSCH repetition Type A，也是UE基于DCI format 0_1或0_2的TDRA字段确定$N \cdot K$个连续的slot。
