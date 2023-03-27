@@ -64,3 +64,5 @@ $N_{\text {slot, offset, PDCCH }}^{\mathrm{CA}}$和$\mu_{\text {offset,PDCCH}}$�
 
 在确定时域资源分配时
 对于DCI format 0_1或DCI format 0_2调度的PUSCH，如果参数*numberOfSlotsTBoMS*存在并且取值大于1，那么UE采用TB processing over multiple slots过程。
+
+对于PUSCH repetition Type A和TB processing over multiple slots，起始符号*S*相对于slot的起始位置，连续符号数*L*从*S*开始计数，*S* *L*和*SLIV*之间的关系为：
