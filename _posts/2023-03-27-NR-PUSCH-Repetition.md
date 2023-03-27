@@ -54,3 +54,6 @@ $$
 K_s=\left\lfloor n \cdot \frac{2^{\mu P U S C H}}{2^{\mu P D C C H}}\right\rfloor+K_2+K_{\text {offset }} \cdot \frac{2^{\mu \text { PUSCH }}}{2^{\mu_{\text {off set }}}}
 $$
 这里的$K_{\text {offset }}$见38213/4.2，$\mu_{K_{\text {offset }}}$是$K_{\text {offset }}$的子载波间隔配置，对FR1，取0。$n$是调度DCI的slot，$K_2$和PUSCH的参数集有关，$\mu_{\text {PUSCH}}$和$\mu_{\text {PDCCH}}$是PUSCH和PDCCH的子载波间隔配置，并且要求调度的DCI不是由TC-RNTI CRC加扰的DCI format 0_0。
+
+$N_{\text {slot, offset, PDCCH }}^{\mathrm{CA}}$和$\mu_{\text {offset,PDCCH}}$是小区接收到的PDCCH的$N_{\text {slot, offset}}^{\mathrm{CA}}$和$\mu_{\text {offset}}$，由*ca-SlotOffset*配置。对应的PUSCH的参数由发送PUSCH的小区的参数*ca-SlotOffset*配置，见38211/4.5。
+
