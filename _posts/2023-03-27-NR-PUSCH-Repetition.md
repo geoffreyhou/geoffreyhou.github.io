@@ -37,11 +37,14 @@ PUSCH repetition type A意思是UE在连续的多个slot上发送同一个TB，�
 - 通过DCI format 0_1或0_2调度，并且使用C-RNTI，MCS-C-RNTI或CS-RNTI加扰，NDI=1。
 - 通过DCI format 0_0调度，并使用TC-RNTI加扰。
 - 通过RAR UL grant调度。
+
+
 ### PUSCH repetition type A的重复次数
 R15中最大重复次数是8，R16中最大重复次数是16，R17中最大重复次数是32。R16和R17的IE见下图
 ![image](https://user-images.githubusercontent.com/115327603/228095218-498fdb17-afa8-41d2-b2b7-1f31f2e4f319.png)
 可以看到，R16中numberOfRepetitions可以取：1/2/3/4/7/8/12/16，R17中numberOfRepetitions可以取：1/2/3/4/7/8/12/16/20/24/28/32。
 实际上，$K$的取值是这样配置的：如果资源分配表格中存在*numberOfRepetitions*，那么$K=$*numberOfRepetitions*；如果资源分配表格中没有*numberOfRepetitions*，那么如果配置了*pusch-AggregationFactor*，$K=$*AggregationFactor*；否则$K=1$。
+
 ### PUSCH repetition type A相关的其他配置
 - 会影响冗余版本。
 - 只支持层数为1.
