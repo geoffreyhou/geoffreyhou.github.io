@@ -23,6 +23,31 @@ hidden: true
 
 翻译学习总结下NR PUSCH的Repetition相关协议内容。<!--more-->
 
+## PUSCH repetition type A
+PUSCH repetition type A意思是UE在连续的多个slot上发送同一个TB，连续发送的slot个数用$K$表示，并且在这$K$个slot上时域资源分配完全相同。
+相当于，PUSCH的repetition配置结束后就可以$K$次重传，HARQ则需要收到NACK才会重传。
+正常的PUSCH传输可以认为是$K=1$的PUSCH repetition type A。
+### 什么时候使用PUSCH repetition type A/B
+- 通过DCI format 0_1调度的PUSCH，如果pusch-RepTypeIndicatorDCI-0-1配置为’pusch-RepTypeB’，UE采用PUSCH repetition Type B。
+- 通过DCI format 0_2调度的PUSCH，如果pusch-RepTypeIndicatorDCI-0-2配置为’pusch-RepTypeB’，UE采用PUSCH repetition Type B。
+- 如果不满足上面两个条件，UE采用PUSCH repetition Type A。
+
+意思是如果DCI format 0_1或0_2中指定了才会使用PUSCH repetition Type B，其他一般情况下都是PUSCH repetition Type A。
+### PUSCH repetition type A的调度方式
+- 通过DCI format 0_1或0_2调度，并且使用C-RNTI，MCS-C-RNTI或CS-RNTI加扰，NDI=1。
+- 通过DCI format 0_0调度，并使用TC-RNTI加扰。
+- 通过RAR UL grant调度。
+### PUSCH repetition type A的重复次数
+R15中最大重复次数是8，R16中最大重复次数是16，R17中最大重复次数是32。R16和R17的IE见下图
+![image](https://user-images.githubusercontent.com/115327603/228095218-498fdb17-afa8-41d2-b2b7-1f31f2e4f319.png)
+可以看到，R16中numberOfRepetitions可以取：1/2/3/4/7/8/12/16，R17中numberOfRepetitions可以取：1/2/3/4/7/8/12/16/20/24/28/32。
+实际上，$K$的取值是这样配置的：如果资源分配表格中存在*numberOfRepetitions*，那么$K=$*numberOfRepetitions*；如果资源分配表格中没有*numberOfRepetitions*，那么如果配置了*pusch-AggregationFactor*，$K=$*AggregationFactor*；否则$K=1$。
+### PUSCH repetition type A相关的其他配置
+- 会影响冗余版本。
+- 只支持层数为1.
+- 映射类型可以是PUSCH mapping type A和PUSCH mapping type B。
+- 如果需要，可以放弃repetition在该slot上的传输，具体场景见38213/11.1。
+
 ## 时域资源分配
 首先有协议上一长串关于时域资源分配的描述。下面内容都是协议的章节编号和翻译。
 #### 6.1.2.1 Resource allocation in time domain
