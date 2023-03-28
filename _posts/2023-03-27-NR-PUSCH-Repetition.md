@@ -48,6 +48,57 @@ R15中最大重复次数是8，R16中最大重复次数是16，R17中最大重�
 - 映射类型可以是PUSCH mapping type A和PUSCH mapping type B。
 - 如果需要，可以放弃repetition在该slot上的传输，具体场景见38213/11.1。
 
+### PUSCH repetition type A跳频相关
+#### 跳频开关
+- 通过DCI format 0_2调度时，*pusch-Config*中的*frequencyHoppingDCI-0-2*配置。
+- 通过除了DCI format 0_2的其他format调度时，*pusch-Config*中的*frequencyHopping*配置。
+- 对于configured PUSCH transmission，*configuredGrantConfig*中的*frequencyHopping*配置。
+- RAR UL grant或者TC-RNTI加扰的DCI format 0_0，有对应的跳频信息字段。
+
+#### 支持的跳频类型
+- Intra-slot frequency hopping。适用于单slot和多slot的configured PUSCH transmission，DCI format 0_1或0_2调度的多slotPUSCH传输（如果DCI中配置了*pusch-TimeDomainAllocationListForMultiPUSCH*，那么多个PUSCH传输都通过这一个DCI调度；如果提供了*cg-nrofSlots*和*cg-nrofPUSCH-InSlot*，那么多个configured grant PUSCH transmissions也是使用一个配置）
+- Inter-slot frequency hopping。适用于多slot PUSCH。
+
+注意：频域资源分配type 1时，才可能跳频。
+#### 跳频偏移的配置
+可以分为两种情况，一种是配置一个值*frequencyHoppingOffset*，一种是配置一个偏移值列表*frequencyHoppingOffsetLists*，不过最后都是选择一个偏移值使用。
+偏移值列表需要说明：
+- 如果激活的BWP大小小于50个PRB，那么可以配置2个偏移值，并选择一个使用。
+- 如果激活的BWP大小大于等于50个PRB，那么可以配置4个偏移值，并选择一个使用。
+
+在R17的DCI中有这样一段说明
+![image](https://user-images.githubusercontent.com/115327603/228099557-d39025e4-73b9-477a-b7ab-ce2be60c0f40.png)
+也就是如果*frequencyHoppingOffsetLists*包含两个偏移值，$N_{UL_hop}=1$；如果*frequencyHoppingOffsetLists*包含四个偏移值，$N_{UL_hop}=2$。$N_{UL_hop}$配合下面这个表使用
+![image](https://user-images.githubusercontent.com/115327603/228099973-f123eb41-cb6f-44b8-998a-ee4fbf657d94.png)
+#### 跳频的方法
+对于intra-slot frequency hopping，计算如下：
+$$
+\mathrm{RB}_{\text {start }}=\left\{\begin{array}{cc}
+\mathrm{RB}_{\text {start }} & i=0 \\
+\left(\mathrm{RB}_{\text {start}}+\mathrm{RB}_{\text {offset}}\right) \bmod N_{BWP}^{\text {size}} & i=1
+\end{array}\right.
+$$
+$i=0$和$i=1$分别表示第一跳和第二跳。按照上面的跳频偏移值的选择就可以得到两跳的RB位置（注意，这里的RB位置只是起始位置，后面的没说明，但是默认不会超过BWP）。
+两跳的符号划分是这样的，第一跳的符号数是$\left\lfloor N_{symb}^{PUSCH,s} / 2\right\rfloor$，第二跳的符号数是$N_{symb}^{PUSCH,s}-\left\lfloor N_{symb}^{PUSCH,s} / 2\right\rfloor$，这里的$N_{symb}^{PUSCH,s}$表示一个slot上分配给PUSCH传输的符号数。
+
+对于inter-slot frequency hopping，如果*PUSCH-DMRS-Bundling*不使能，或者，对于RAR UL grant或TC-RNTI加扰的DCI format 0_0调度的inter-slot frequency hopping，在slot $n_s^\mu$上的起始RB计算为：
+$$
+\mathrm{RB}_{\text {start }}\left(n_s^\mu\right)=\left\{\begin{array}{cc}
+\mathrm{RB}_{\text {start }} & n_s^\mu \bmod 2=0 \\
+\left(\mathrm{RB}_{\text {start }}+\mathrm{RB}_{\text {offset }}\right) \bmod N_{B W P}^{s i z e} & n_s^\mu \bmod 2=1
+\end{array}\right.
+$$
+inter-slot frequency hopping就没有符号的划分了，因为是整个slot上的。
+
+对于inter-slot frequency hopping，如果*PUSCH-DMRS-Bundling*使能，并且不满足（RAR UL grant或TC-RNTI加扰的DCI format 0_0调度），在slot $n_s^\mu$上的起始RB计算为：
+$$
+\mathrm{RB}_{\text {start }}\left(n_s^\mu\right)=\left\{\begin{array}{cc}
+\mathrm{RB}_{\text {start }} & \left\lfloor\frac{n_S^\mu}{N_{F H}}\right\rfloor \bmod 2=0 \\
+\left(\mathrm{RB}_{\text {start }}+\mathrm{RB}_{\text {offset }}\right) \bmod N_{B W P}^{s i z e} & \left\lfloor\frac{n_S^\mu}{N_{F H}}\right\rfloor \bmod 2=1
+\end{array}\right.
+$$
+$F_{FH}$是高层参数*PUSCH-Frequencyhopping-Interval*的值。
+
 ## 时域资源分配
 首先有协议上一长串关于时域资源分配的描述。下面内容都是协议的章节编号和翻译。
 #### 6.1.2.1 Resource allocation in time domain
