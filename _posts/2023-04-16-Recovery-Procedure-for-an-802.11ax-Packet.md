@@ -25,6 +25,7 @@ matlab的Recovery Procedure for an 802.11ax Packet页面翻译。<!--more-->
 
 # Recovery Procedure for an 802.11ax Packet
 
+https://ww2.mathworks.cn/help/wlan/ug/recovery-procedure-for-an-802-11ax-packet.html#HESignalRecoveryExample-15
 此示例显示如何从接收到的IEEE®802.11ax波形中检测数据包并解码payload比特。接收机从前导字段中恢复数据包格式参数，以对数据字段和MAC帧进行解码。
 
 ## Introduction
