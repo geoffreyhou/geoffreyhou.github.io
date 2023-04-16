@@ -3,7 +3,7 @@ layout: post
 title:  "Recovery Procedure for an 802.11ax Packet"
 author: "Geoffrey Hou"
 comments: true
-tags: NR
+tags: WIFI
 excerpt_separator: <!--more-->
 sticky: true
 hidden: true
