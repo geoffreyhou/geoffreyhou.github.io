@@ -235,6 +235,10 @@ cfgRx.PacketFormat = pktFormat;
 ind = wlanFieldIndices(cfgRx);
 ```
 
+输出为：
+![image-20230416143342477](https://user-images.githubusercontent.com/115327603/232277596-368e730b-a944-4c4e-bfce-20135902cabc.png)
+
+
 ## L-LTF Channel Estimate
 
 对L-LTF进行解调并执行信道估计。解调的L-LTF符号包括每个20MHz段的tone rotation，如[2]第21.3.7.5节所述。L-LTF信道估计（具有tone rotation）用于均衡和解码前HE LTF字段。
@@ -301,6 +305,10 @@ fprintf(' RXTIME: %dus\n',RXTime);
 fprintf(' Number of samples in the packet: %d\n\n',numRxSamples);
 ```
 
+输出为：
+![image-20230416143440542](https://user-images.githubusercontent.com/115327603/232277625-9437cf07-2c8d-449d-bca6-c850549b1c2f.png)
+
+
 在给定计算的RXTIME和相应的样本数量的情况下，显示rx内检测到的数据包的波形和频谱。
 
 ```matlab
@@ -320,6 +328,11 @@ release(timeScope);
 spectrumAnalyzer(rx(pktOffset + (1:numRxSamples),:));
 release(spectrumAnalyzer);
 ```
+
+输出为：
+![image-20230416143844229](https://user-images.githubusercontent.com/115327603/232277640-85f36a2e-6852-4ef6-ab17-4ec09f0eb707.png)
+![image-20230416143836176](https://user-images.githubusercontent.com/115327603/232277643-14e48c95-e55a-4fe2-a688-607856b4df00.png)
+
 
 ## HE-SIG-A Decoding
 
@@ -361,6 +374,10 @@ end
 fprintf(' HE-SIG-A EVM: %2.2fdB\n\n',20*log10(mean(rmsEVM)/100));
 ```
 
+输出为：
+![image-20230416143534587](https://user-images.githubusercontent.com/115327603/232277658-efd187bd-ef3c-41ac-9158-5786520b72a5.png)
+
+
 ## Interpret Recovered HE-SIG-A bits
 
 [wlanHERecoveryConfig](matlab:edit('wlanHERecoveryConfig.m'))对象在解释恢复的HE-SIG-A位之后进行更新。
@@ -375,6 +392,10 @@ ind = wlanFieldIndices(cfgRx); % Update field indices
 ```matlab
 disp(cfgRx)
 ```
+
+输出为：
+![image-20230416143603111](https://user-images.githubusercontent.com/115327603/232277665-395b0bb4-8e14-484a-b134-5f098b81ffd7.png)
+
 
 ## HE-SIG-B Decoding
 
@@ -439,6 +460,10 @@ else % HE-SU, HE-EXT-SU
     numUsers = 1;
 end
 ```
+
+输出为：
+![image-20230416143624148](https://user-images.githubusercontent.com/115327603/232277685-983a37e9-3e6b-4071-b26c-25d6c0233c49.png)
+
 
 ## HE-Data Decoding
 
@@ -537,6 +562,13 @@ for iu = 1:numUsers
     hePlotEVMPerSubcarrier(eqSymUser,user,EVMPerSubcarrier,iu,numUsers);
 end
 ```
+
+输出为：
+![image-20230416143640737](https://user-images.githubusercontent.com/115327603/232277726-9e542e5d-d2fd-49c0-a628-a3549e2e1afd.png)
+![image-20230416143806314](https://user-images.githubusercontent.com/115327603/232277733-e9234521-f1df-4ae3-82eb-001a92590801.png)
+![image-20230416143754680](https://user-images.githubusercontent.com/115327603/232277736-3b5edaa0-989c-46fc-85a4-915df965bcd5.png)
+![image-20230416143731556](https://user-images.githubusercontent.com/115327603/232277743-bc3bb5c2-7023-4ba5-8455-a1d4dd204e5c.png)
+
 
 ## Selected Bibliography
 
