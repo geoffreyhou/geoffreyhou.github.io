@@ -103,7 +103,7 @@ At runtime, the calling function validates object settings for properties releva
 	- 当您将此属性设置为 1 (true) 时，STBC 将应用于数据字段。 时空流的数量是空间流数量的两倍。
 	- 约束：**此属性仅在 NumSpaceTimeStreams 属性为 2 且 DCM 属性为 0 (false) 时适用。**
 
-- `MCS`：用于传输当前数据包的调制和编码方案 (MCS)，指定为区间 [0, 11] 中的非负整数。 下表显示了每个 MCS 有效值的调制类型和编码率：![image-20230418164542325](./matlab-wlanHESUConfig.assets/image-20230418164542325.png)
+- `MCS`：用于传输当前数据包的调制和编码方案 (MCS)，指定为区间 [0, 11] 中的非负整数。 下表显示了每个 MCS 有效值的调制类型和编码率：![image-20230418164542325](https://user-images.githubusercontent.com/115327603/232736636-103c3d9c-14e0-4ee3-97fa-bc8272573bd7.png)
 
 	- 约束：**当您将 ExtendedRange 设置为 1 (true) 时，您只能将此属性设置为 0、1 或 2。**
 	- 约束：**当您将 Upper106ToneRU 设置为 1 (true) 时，您只能将此属性设置为 0。**
@@ -142,7 +142,7 @@ At runtime, the calling function validates object settings for properties releva
 	- 约束：**仅当 NumSpaceTimeStreams 属性小于或等于任何 RU 的 4 时，此属性的 1（true）值才有效。**
 - `MidamblePeriodicity`：HE-Data 字段的中Midamble周期，以 OFDM 符号数表示，指定为 10 或 20。
 	- 约束：**此属性仅在 HighDoppler 属性为 1（true）时适用。**
-- `NominalPacketPadding`：Nominal packet padding，以微秒为单位，指定为 0、8 或 16。wlanHESUConfig 对象使用此属性和前向纠错 (pre-FEC) 填充因子来计算数据包的持续时间 TPE 扩展 (PE) 字段。 有关数据包扩展字段的更多信息，请参阅[[2\]](https://ww2.mathworks.cn/help/wlan/ref/wlanhesuconfig.html#mw_12ce61d2-4b46-4827-9281-e65b2413e9ba_sep_mw_biblio_80211ax-2021) 的第 27.3.12 节。此表显示了此属性和 $a$的不同值的$T_{\mathrm{PE}}$的可能值，它由 [[2\]](https://ww2.mathworks.cn/help/wlan/ref/wlanhesuconfig.html#mw_12ce61d2-4b46-4827-9281-e65b2413e9ba_sep_mw_biblio_80211ax-2021)的等式 (27-83) 或 (27-84) 定义。![image-20230418170055045](./matlab-wlanHESUConfig.assets/image-20230418170055045.png)
+- `NominalPacketPadding`：Nominal packet padding，以微秒为单位，指定为 0、8 或 16。wlanHESUConfig 对象使用此属性和前向纠错 (pre-FEC) 填充因子来计算数据包的持续时间 TPE 扩展 (PE) 字段。 有关数据包扩展字段的更多信息，请参阅[[2\]](https://ww2.mathworks.cn/help/wlan/ref/wlanhesuconfig.html#mw_12ce61d2-4b46-4827-9281-e65b2413e9ba_sep_mw_biblio_80211ax-2021) 的第 27.3.12 节。此表显示了此属性和 $a$的不同值的$T_{\mathrm{PE}}$的可能值，它由 [[2\]](https://ww2.mathworks.cn/help/wlan/ref/wlanhesuconfig.html#mw_12ce61d2-4b46-4827-9281-e65b2413e9ba_sep_mw_biblio_80211ax-2021)的等式 (27-83) 或 (27-84) 定义。![image-20230418170055045](https://user-images.githubusercontent.com/115327603/232736757-edb9048b-383d-44d0-9834-b7ae8d8c8eeb.png)
 	- 约束：**要启用此属性，请将 APEPLength 属性设置为区间 [1, 6,500,531] 中的整数。 NDP 的 PE 字段的持续时间，无论Nominal packet padding如何，都是 4 微秒。**
 - `PostFECPaddingSource`：wlanWaveformGenerator 函数使用的后 FEC 填充位源，指定为这些值之一：
 	- 'mt19937ar with seed' - 使用 mt19937ar 算法生成正态分布的随机位，种子在 PostFECPaddingSeed 属性中指定。
