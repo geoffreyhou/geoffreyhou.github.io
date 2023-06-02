@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "What is a Clear Channel Assessment (CCA)"
+title:  "What-is-a-Clear-Channel-Assessment(CCA)"
 author: "Geoffrey Hou"
 comments: true
 tags: WIFI
